@@ -1,6 +1,6 @@
-from PersonalDb import db_handle
-from conf import setting
-import os, json, struct, subprocess
+from server.PersonalDb import db_handle
+from server.conf import setting
+import os, json, struct
 
 
 class data:
@@ -225,6 +225,6 @@ class PersonDbModel:
             while size < head['total_size']:
                 line = conn.recv(1024)
                 f.write(line)
-                size += line
+                size += len(line)
 
 

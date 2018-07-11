@@ -1,5 +1,5 @@
-from PersonalDb import DB_MODULE
-
+from server.PersonalDb import DB_MODULE
+from lib import common
 
 class users:
     user = {'name': None}
@@ -10,7 +10,7 @@ class users:
         if user:
             conn.secd('用户已经存在'.encode('utf-8'))
         else:
-            DB_MODULE.user(name,passwd)
+            DB_MODULE.user(name, passwd)
 
             conn.send('注册成功'.encode('utf-8'))
     @staticmethod

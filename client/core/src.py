@@ -1,7 +1,6 @@
-import socket,json,os,struct
-from conf import setting
-soc = socket.socket()
-soc.connect((setting.IP,setting.prot))
+import json,os,struct
+
+
 
 class cliect:
     @staticmethod
@@ -16,11 +15,12 @@ class cliect:
             head_size = cliect.get_head_size(headdic)
             conn.send(head_size)
             conn.send(headdic)
-            # EVERY_TIME_SEND_SIZE = [20, 20, 30, ]
             with open(file_path, 'rb')as f:
+                __S = '.'
                 for line in f:
                     conn.send(line)
-
+                    print(__S)
+                    __S += '.'
     @staticmethod
     def get(_,conn):
         head_size = struct.unpack('i', conn.recv(4))[0]
@@ -35,6 +35,7 @@ class cliect:
                 line = conn.recv(1024)
                 f.write(line)
                 size += len(line)
+                print('\r[%-20s]%3.2f%%'%('*'*int(size//head['total_size']),size//head['total_size']))
 
     @staticmethod
     def get_head_size( head_dic):
@@ -68,16 +69,3 @@ class cliect:
                 md5.update(f.read(10))
                 f.seek(total_size//i)
         return md5.hexdigest()
-
-
-while True:
-    cmd = input('<>>>>>>>>>>>')
-    if len(cmd) == 0:
-        continue
-    soc.send(cmd.encode('utf-8'))
-    if hasattr(cliect,cmd.split()[0]):
-        cmd,*args = cmd.split()
-        getattr(cliect,cmd)(*args,soc)
-        continue
-    res = soc.recv(1024)
-    print(res.decode('utf-8'))

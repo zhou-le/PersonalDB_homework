@@ -1,6 +1,6 @@
-from conf import setting
+from server.conf import setting
 import socketserver,sys,os
-from core import user
+from server.core import user
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
@@ -24,5 +24,5 @@ class server(socketserver.BaseRequestHandler):
 
 if __name__ == '__main__':
 
-    soc = socketserver.ThreadingTCPServer((setting.IP,setting.prot),server)
+    soc = socketserver.ThreadingTCPServer((setting.IP, setting.prot), server)
     soc.serve_forever()
