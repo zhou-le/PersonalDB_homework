@@ -16,11 +16,10 @@ class cliect:
             conn.send(head_size)
             conn.send(headdic)
             with open(file_path, 'rb')as f:
-                __S = '.'
+                print('上传中')
                 for line in f:
                     conn.send(line)
-                    print(__S)
-                    __S += '.'
+                print('上传完成')
     @staticmethod
     def get(_,conn):
         head_size = struct.unpack('i', conn.recv(4))[0]
@@ -35,7 +34,7 @@ class cliect:
                 line = conn.recv(1024)
                 f.write(line)
                 size += len(line)
-                print('\r[%-20s]%3.2f%%'%('*'*int(size//head['total_size']),size//head['total_size']))
+                print('\r[%-20s]%3.2f%%'%('*'*int(size//head['total_size']*20),size//head['total_size']*100),end='')
 
     @staticmethod
     def get_head_size( head_dic):

@@ -1,6 +1,6 @@
 import socket
 from server.conf import setting
-from core import src
+from client.core import src
 
 
 

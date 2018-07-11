@@ -124,10 +124,13 @@ class PersonDbModel:
         '''
         dirlist = os.listdir(self.current_db_path)
         res = ''
-        for i in range(len(dirlist)):
-            res += '%-6s' % dirlist[i]
-            if (i + 1) % 5 == 0:
-                res += '\n'
+        if dirlist:
+            for i in range(len(dirlist)):
+                res += '%-6s' % dirlist[i]
+                if (i + 1) % 5 == 0:
+                    res += '\n'
+        else:
+            res += '无项目'
         conn.send(res.encode('utf-8'))
 
 
@@ -223,7 +226,7 @@ class PersonDbModel:
         file_path = os.path.join(self.current_db_path,head['name'])
         with open(file_path, 'wb')as f:
             while size < head['total_size']:
-                line = conn.recv(1024)
+                line = conn.recv(1024*1024)
                 f.write(line)
                 size += len(line)
 

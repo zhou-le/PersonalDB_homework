@@ -1,5 +1,5 @@
 from server.PersonalDb import DB_MODULE
-from lib import common
+from server.lib import common
 
 class users:
     user = {'name': None}
